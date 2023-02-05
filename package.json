@@ -2,7 +2,7 @@
   "name": "discord-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "clovis.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.33.0"
+  },
+  "dependencies": {
+    "discord.js": "^14.7.1"
   }
 }
