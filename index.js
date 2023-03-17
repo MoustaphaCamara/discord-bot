@@ -8,7 +8,6 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // load commands
 client.commands = new Collection();
-
 // create a path to the /commands directory with path.join()
 const commandsPath = path.join(__dirname, "commands");
 // commandFiles = all files in commandsPath filtered to get .js only
@@ -36,6 +35,7 @@ client.once(Events.ClientReady, (c) => {
   console.log(`Logged in as ${c.user.tag}`);
 });
 
+// my commands
 client.on(Events.InteractionCreate, async (interaction) => {
   // check if it's slash command
   if (!interaction.isChatInputCommand()) return;
@@ -46,16 +46,21 @@ client.on(Events.InteractionCreate, async (interaction) => {
     console.log(`No command matching ${interaction.commandName} found here..`);
     return;
   }
-
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.log(error);
-    await interaction.reply({
-      content: "There was an error while executing this command! Try again",
-      ephemeral: true,
-    });
+  if (command.data.name === "cat" || command.data.name === "anime") {
+    await interaction.deferReply();
+    command.execute(interaction);
+  } else {
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.log(error);
+      await interaction.reply({
+        content: "There was an error while executing this command! Try again",
+        ephemeral: true,
+      });
+    }
   }
 });
+
 // login with token
 client.login(config.token);
